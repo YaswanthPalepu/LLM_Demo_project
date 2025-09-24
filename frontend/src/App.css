@@ -1,0 +1,227 @@
+
+
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('./assets/helpdesk.jpeg'); /* **IMPORTANT: Replace with your image URL or local path** */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Keeps background fixed when content scrolls */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content:right;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.App {
+  background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for a subtle effect */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* More prominent shadow for depth */
+  width: 1200px;
+  max-width: 500px; /* Chatbot-like width */
+  height: 80vh; /* Increased height for better chat experience */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative; /* Needed for absolute positioning of header */
+}
+
+.App-header {
+  background-color: #5e28c4; /* Darker blue header */
+  color: white;
+  padding: 15px 20px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  text-align: center;
+  font-size: 1.2em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky; /* Make header sticky */
+  top: 0;
+  z-index: 10;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 15px; 
+  overflow: hidden; 
+  position: relative;
+
+  
+}
+
+.welcome-message {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: auto; /* Pushes welcome message to bottom when no messages */
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.messages-display {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between messages */
+  overflow-y: auto; /* Enable scrolling within the message area */
+  padding-right: 5px; /* Space for scrollbar */
+  padding-bottom: 10px; /* Padding at the bottom of messages */
+}
+
+/* Custom scrollbar for messages-display */
+.messages-display::-webkit-scrollbar {
+  width: 8px;
+}
+.messages-display::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.messages-display::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+.messages-display::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+.chat-message {
+  display: flex;
+  align-items: flex-end; /* Align avatar and message bubble at the bottom */
+  gap: 8px; /* Space between avatar and message */
+  max-width: 100%; /* Ensure messages don't overflow */
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.chat-message.assistant {
+  justify-content: flex-start;
+}
+
+.message-avatar {
+  font-size: 24px; /* Size of the avatar emoji */
+  line-height: 1; /* Keep avatar compact */
+}
+
+.chat-message.user .message-avatar {
+  order: 2; /* Move user avatar to the right */
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 75%; /* Limit message content width */
+}
+
+.chat-message.user .message-content {
+  align-items: flex-end;
+}
+
+.chat-message.assistant .message-content {
+  align-items: flex-start;
+}
+
+.message-bubble {
+  padding: 10px 15px;
+  border-radius: 18px; /* Softer, pill-like bubbles */
+  position: relative;
+  word-wrap: break-word; /* Ensure long words wrap */
+  white-space: pre-wrap; /* Preserve whitespace and breaks */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Subtle bubble shadow */
+}
+
+.chat-message.user .message-bubble {
+  background-color: #4a69bd; /* User message color */
+  color: white;
+  border-bottom-right-radius: 2px; /* Pointy corner for user */
+}
+
+.chat-message.assistant .message-bubble {
+  background-color: #e0e0e0; /* Assistant message color */
+  color: #333;
+  border-bottom-left-radius: 2px; /* Pointy corner for assistant */
+}
+
+.chat-message.assistant.loading .message-bubble {
+  background-color: #f0f0f0;
+  color: #777;
+  font-style: italic;
+}
+
+.chat-message.assistant.error .message-bubble {
+  background-color: #ffe0e0; /* Lighter red for error bubbles */
+  color: #c0392b; /* Darker red text */
+  border: 1px solid #ffaaaa;
+}
+
+.message-timestamp {
+  font-size: 0.75em;
+  color: #888;
+  margin-top: 4px;
+  align-self: flex-end; /* Align timestamp to the right for user */
+}
+
+.chat-message.assistant .message-timestamp {
+  align-self: flex-start; /* Align timestamp to the left for assistant */
+}
+
+
+.query-form {
+  display: flex;
+  padding: 15px;
+  border-top: 1px solid #eee;
+  gap: 10px;
+  background-color: white; /* Ensure form background is white */
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.query-form input[type="text"] {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px; /* Rounded input field */
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.query-form input[type="text"]:focus {
+  border-color: #4a69bd; /* Highlight on focus */
+  box-shadow: 0 0 0 2px rgba(74, 105, 189, 0.2); /* Subtle glow on focus */
+}
+
+.query-form button {
+  padding: 12px 20px;
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  border-radius: 20px; /* Rounded send button */
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.query-form button:hover:not(:disabled) {
+  background-color: #3452a3;
+  transform: translateY(-1px);
+}
+
+.query-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
